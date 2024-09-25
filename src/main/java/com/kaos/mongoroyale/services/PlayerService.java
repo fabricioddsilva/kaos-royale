@@ -3,6 +3,7 @@ package com.kaos.mongoroyale.services;
 import com.kaos.mongoroyale.entites.Battle;
 import com.kaos.mongoroyale.entites.Participant;
 import com.kaos.mongoroyale.entites.Player;
+import com.kaos.mongoroyale.entites.enums.Result;
 import com.kaos.mongoroyale.repositories.PlayerRepository;
 import com.kaos.mongoroyale.services.exceptions.ConnectionNotSucessfulException;
 import kong.unirest.core.HttpResponse;
@@ -104,6 +105,19 @@ public class PlayerService {
 
             if (!opponents.isEmpty()) {
                 newBattle.setOpponent(opponents.get(0)); // Set the first participant as the opponent
+            }
+
+
+            if (i < data.length() - 1) {
+                JSONObject nextBattle = data.getJSONObject(i + 1);
+                int nextStartingTrophies = nextBattle.getJSONArray("team").getJSONObject(0).getInt("startingTrophies");
+                int currentStartingTrophies = newBattle.getTeam().getStartingTrophies();
+
+                if (nextStartingTrophies > currentStartingTrophies) {
+                    newBattle.setResult(Result.VICTORY);
+                } else {
+                    newBattle.setResult(Result.DEFEAT);
+                }
             }
 
             battles.add(newBattle);

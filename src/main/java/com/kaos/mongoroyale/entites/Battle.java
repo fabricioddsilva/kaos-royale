@@ -1,5 +1,7 @@
 package com.kaos.mongoroyale.entites;
 
+import com.kaos.mongoroyale.entites.enums.Result;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
@@ -12,6 +14,7 @@ public class Battle implements Serializable {
     private Instant battleTime;
     private Participant team;
     private Participant opponent;
+    private Result result;
 
     public Battle() {
     }
@@ -44,5 +47,13 @@ public class Battle implements Serializable {
 
     public void setOpponent(Participant opponent) {
         this.opponent = opponent;
+    }
+
+    public Result getResult() {
+        return result;
+    }
+
+    public void setResult(Result result) {
+        this.result = result;
     }
 }
