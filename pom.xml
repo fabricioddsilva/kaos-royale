@@ -50,6 +50,37 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/com.konghq/unirest-java-core -->
+		<dependency>
+			<groupId>com.konghq</groupId>
+			<artifactId>unirest-java-core</artifactId>
+			<version>4.4.4</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.konghq/unirest-object-mappers-gson -->
+		<dependency>
+			<groupId>com.konghq</groupId>
+			<artifactId>unirest-object-mappers-gson</artifactId>
+			<version>4.2.9</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.konghq/unirest-modules-gson -->
+		<dependency>
+			<groupId>com.konghq</groupId>
+			<artifactId>unirest-modules-gson</artifactId>
+			<version>4.4.4</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver-sync</artifactId>
+			<version>5.1.4</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
