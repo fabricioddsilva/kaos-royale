@@ -68,6 +68,7 @@ public class PlayerService {
         }
     }
 
+
     public Player loadPlayer(HttpResponse<JsonNode> data){
         return new Player(
                 data.getBody().getObject().getString("tag"),

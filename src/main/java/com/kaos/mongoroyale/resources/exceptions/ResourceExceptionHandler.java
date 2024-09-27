@@ -20,7 +20,7 @@ public class ResourceExceptionHandler {
         StandardError err = new StandardError(
                 Instant.now(),
                 status.value(),
-                "Não foi possível se conecta a API do Clash Royale, por favor verifique a chave de autorização",
+                "Não foi possível coletar os dados desse jogador",
                 e.getMessage(),
                 request.getRequestURI()
         );
