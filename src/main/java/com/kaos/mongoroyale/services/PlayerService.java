@@ -6,10 +6,12 @@ import com.kaos.mongoroyale.entites.Player;
 import com.kaos.mongoroyale.entites.enums.Result;
 import com.kaos.mongoroyale.repositories.PlayerRepository;
 import com.kaos.mongoroyale.services.exceptions.ConnectionNotSucessfulException;
+import com.kaos.mongoroyale.services.exceptions.LoadBattlesException;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
 import kong.unirest.core.Unirest;
 import kong.unirest.core.json.JSONArray;
+import kong.unirest.core.json.JSONException;
 import kong.unirest.core.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,21 +49,26 @@ public class PlayerService {
 
             Player player = loadPlayer(player_data);
 
-            JSONArray battle_data = Unirest.get(url+"/battlelog")
-                    .header("Authorization", api_key)
-                    .asJson()
-                    .getBody()
-                    .getArray();
+            try {
 
-            List<Battle> battles = loadBattles(battle_data);
+                JSONArray battle_data = Unirest.get(url + "/battlelog")
+                        .header("Authorization", api_key)
+                        .asJson()
+                        .getBody()
+                        .getArray();
 
-            for(Battle battle : battles){
-                player.addBattle(battle);
+                List<Battle> battles = loadBattles(battle_data);
+
+                for (Battle battle : battles) {
+                    player.addBattle(battle);
+                }
+
+                repository.save(player);
+
+                return player;
+            }catch (JSONException e){
+                throw new LoadBattlesException(e.getMessage());
             }
-
-            repository.save(player);
-
-            return player;
 
         } else {
             throw new ConnectionNotSucessfulException("Não foi possível se conectar com a API");

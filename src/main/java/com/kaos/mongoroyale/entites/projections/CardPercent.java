@@ -1,14 +1,14 @@
 package com.kaos.mongoroyale.entites.projections;
 
-public class ResultPercent {
+public class CardPercent {
     private Integer totalBattles;
     private Double victoryPercentage;
     private Double defeatPercentage;
 
-    public ResultPercent() {
+    public CardPercent() {
     }
 
-    public ResultPercent(Integer totalBattles, Double victoryPercentage, Double defeatPercentage) {
+    public CardPercent(Integer totalBattles, Double victoryPercentage, Double defeatPercentage) {
         this.totalBattles = totalBattles;
         this.victoryPercentage = victoryPercentage;
         this.defeatPercentage = defeatPercentage;
@@ -36,5 +36,12 @@ public class ResultPercent {
 
     public void setDefeatPercentage(Double defeatPercentage) {
         this.defeatPercentage = defeatPercentage;
+    }
+
+    @Override
+    public String toString() {
+        return "Total de Batalhas: " + totalBattles + "\n" +
+                "Vitorias: " + String.format("%.2f",victoryPercentage) + "% \n" +
+                "Derrotas: " + String.format("%.2f",defeatPercentage) + "%";
     }
 }
