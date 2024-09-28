@@ -1,5 +1,6 @@
 package com.kaos.mongoroyale.resources;
 
+import com.kaos.mongoroyale.entites.projections.CardDefeats;
 import com.kaos.mongoroyale.entites.projections.CardPercent;
 import com.kaos.mongoroyale.entites.projections.DeckPercent;
 import com.kaos.mongoroyale.resources.util.URL;
@@ -76,13 +77,13 @@ public class CardResource {
         Instant finalTime = URL.convertDate(finalTimeStamp, Instant.now());
 
 
-        String result = service.defeatsByCardCombo(cards, initialTime, finalTime);
+        CardDefeats result = service.defeatsByCardCombo(cards, initialTime, finalTime);
 
         if(result == null){
             throw new ObjectNotFoundException("Verifique o intervalo de tempo ou o nome das cartas");
         }
 
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity.ok().body(result.toString());
     }
 
 

@@ -1,5 +1,6 @@
 package com.kaos.mongoroyale.services;
 
+import com.kaos.mongoroyale.entites.projections.CardDefeats;
 import com.kaos.mongoroyale.entites.projections.CardPercent;
 import com.kaos.mongoroyale.entites.projections.DeckPercent;
 import com.kaos.mongoroyale.repositories.PlayerRepository;
@@ -89,19 +90,19 @@ public class CardService {
 
     }
 
-    public String defeatsByCardCombo (List<String> cards, Instant startTime, Instant endTime){
+    public CardDefeats defeatsByCardCombo (List<String> cards, Instant startTime, Instant endTime){
         Aggregation aggregation = Aggregation.newAggregation(
                 Aggregation.unwind("battles"),
                 Aggregation.match(Criteria.where("battles.team.cards").is(cards)
                         .and("battles.battleTime").gte(startTime).lte(endTime)),
                 Aggregation.group()
+                        .count().as("totalBattles")
                         .sum(ConditionalOperators.when(Criteria.where("battles.result").is("DEFEAT")).then(1).otherwise(0)).as("defeats"),
-                Aggregation.project("defeats")
+                Aggregation.project("totalBattles","defeats")
                         .andExclude("_id")
-
         );
 
-        AggregationResults<String> results = mongoTemplate.aggregate(aggregation, "player", String.class);
+        AggregationResults<CardDefeats> results = mongoTemplate.aggregate(aggregation, "player", CardDefeats.class);
         return results.getUniqueMappedResult();
     }
 }
