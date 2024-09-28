@@ -88,4 +88,20 @@ public class CardService {
         return results.getMappedResults();
 
     }
+
+    public String defeatsByCardCombo (List<String> cards, Instant startTime, Instant endTime){
+        Aggregation aggregation = Aggregation.newAggregation(
+                Aggregation.unwind("battles"),
+                Aggregation.match(Criteria.where("battles.team.cards").is(cards)
+                        .and("battles.battleTime").gte(startTime).lte(endTime)),
+                Aggregation.group()
+                        .sum(ConditionalOperators.when(Criteria.where("battles.result").is("DEFEAT")).then(1).otherwise(0)).as("defeats"),
+                Aggregation.project("defeats")
+                        .andExclude("_id")
+
+        );
+
+        AggregationResults<String> results = mongoTemplate.aggregate(aggregation, "player", String.class);
+        return results.getUniqueMappedResult();
+    }
 }
