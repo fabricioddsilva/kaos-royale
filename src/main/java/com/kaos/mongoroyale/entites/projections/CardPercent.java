@@ -1,6 +1,13 @@
 package com.kaos.mongoroyale.entites.projections;
 
-public class CardPercent {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class CardPercent implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private Integer totalBattles;
     private Double victoryPercentage;
     private Double defeatPercentage;
@@ -38,10 +45,4 @@ public class CardPercent {
         this.defeatPercentage = defeatPercentage;
     }
 
-    @Override
-    public String toString() {
-        return "Total de Batalhas: " + totalBattles + "\n" +
-                "Vitorias: " + String.format("%.2f",victoryPercentage) + "% \n" +
-                "Derrotas: " + String.format("%.2f",defeatPercentage) + "%";
-    }
 }

@@ -1,6 +1,13 @@
 package com.kaos.mongoroyale.entites.projections;
 
-public class CardDefeats {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class CardDefeats implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private Integer totalBattles;
     private Integer defeats;
 
@@ -25,9 +32,4 @@ public class CardDefeats {
         this.defeats = defeats;
     }
 
-    @Override
-    public String toString() {
-        return "Total de Batalhas: " + totalBattles + "\n" +
-                "Derrotas: " + defeats;
-    }
 }

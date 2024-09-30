@@ -1,9 +1,15 @@
 package com.kaos.mongoroyale.entites.projections;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeckPercent {
+public class DeckPercent implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private Integer totalBattles;
     private Integer totalWins;
     private Double winRate;
@@ -52,11 +58,4 @@ public class DeckPercent {
         this.deck = deck;
     }
 
-    @Override
-    public String toString() {
-        return "\nTotal de Batalhas: " + totalBattles + "\n" +
-                "Total de Vitórias: " + totalWins + "\n" +
-                "Taxa de Vitória: " + String.format("%.2f", winRate) + "% \n" +
-                "Deck: " + deck + "\n\n";
-    }
 }

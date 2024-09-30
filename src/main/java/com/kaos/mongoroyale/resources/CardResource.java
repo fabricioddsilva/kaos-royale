@@ -8,11 +8,9 @@ import com.kaos.mongoroyale.services.CardService;
 import com.kaos.mongoroyale.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +22,7 @@ public class CardResource {
     private CardService service;
 
     @GetMapping(value = "/cardPercents")
-    public ResponseEntity<String>
+    public ResponseEntity<CardPercent>
     victoryAndDefeatsPercentByCard(
             @RequestParam(value = "card", defaultValue = "") String card,
             @RequestParam(value = "initialTimeStamp", defaultValue = "") String initialTimeStamp,
@@ -39,11 +37,11 @@ public class CardResource {
             throw new ObjectNotFoundException("Verifique o intervalo de tempo ou o nome da carta");
         }
 
-        return ResponseEntity.ok().body(rp.toString());
+        return ResponseEntity.ok().body(rp);
     }
 
     @GetMapping(value = "/deckPercents")
-    public ResponseEntity<String>
+    public ResponseEntity<List<DeckPercent>>
     deckVictoryRate(
             @RequestParam(value = "rate", defaultValue = "") String rate_text,
             @RequestParam(value = "initialTimeStamp", defaultValue = "") String initialTimeStamp,
@@ -59,19 +57,17 @@ public class CardResource {
             throw new ObjectNotFoundException("Verifique o intervalo de tempo ou a porcentagem inserida");
         }
 
-        return ResponseEntity.ok().body(results.toString());
+        return ResponseEntity.ok().body(results);
 
 
     }
 
     @GetMapping(value = "/comboDefeats")
-    public ResponseEntity<String> cardsComboDefeats(
+    public ResponseEntity<CardDefeats> cardsComboDefeats(
             @RequestParam(value = "cards", defaultValue = "") List<String> cards,
             @RequestParam(value = "initialTimeStamp", defaultValue = "") String initialTimeStamp,
             @RequestParam(value = "finalTimeStamp", defaultValue = "") String finalTimeStamp
     ){
-
-
 
         Instant initialTime = URL.convertDate(initialTimeStamp, new Date(0L).toInstant());
         Instant finalTime = URL.convertDate(finalTimeStamp, Instant.now());
@@ -83,8 +79,12 @@ public class CardResource {
             throw new ObjectNotFoundException("Verifique o intervalo de tempo ou o nome das cartas");
         }
 
-        return ResponseEntity.ok().body(result.toString());
+        return ResponseEntity.ok().body(result);
     }
+
+
+
+
 
 
 
